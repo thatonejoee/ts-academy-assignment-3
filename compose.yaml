@@ -1,0 +1,12 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: devops-tool
+    # Default argument; override it when running, e.g.
+    #   docker compose run --rm app system-info
+    command: ["help"]
+    read_only: true
+    security_opt:
+      - no-new-privileges:true
