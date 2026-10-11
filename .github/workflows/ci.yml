@@ -1,0 +1,54 @@
+name: CI
+
+# Run on every push (any branch) and on every pull request.
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  # Stage 1: lint the code.
+  validate:
+    name: validate
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v4
+
+      - name: Make scripts executable
+        run: chmod +x app/*.sh scripts/*.sh tests/*.sh
+
+      - name: Lint (required files, bash -n, ShellCheck)
+        run: ./scripts/lint.sh
+
+  # Stage 2: run the tests. Starts only if validate succeeded.
+  test:
+    name: test
+    runs-on: ubuntu-latest
+    needs: validate
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v4
+
+      - name: Make scripts executable
+        run: chmod +x app/*.sh scripts/*.sh tests/*.sh
+
+      - name: Run the test suite
+        run: ./tests/test.sh
+
+  # Stage 3: build the image and smoke-test it. Starts only if test succeeded.
+  docker:
+    name: docker
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v4
+
+      - name: Make scripts executable
+        run: chmod +x app/*.sh scripts/*.sh tests/*.sh
+
+      - name: Build the image and run smoke tests
+        run: ./scripts/build.sh
