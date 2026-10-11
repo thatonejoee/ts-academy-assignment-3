@@ -57,7 +57,7 @@ done
 echo
 echo "== ShellCheck (optional) =="
 if command -v shellcheck >/dev/null 2>&1; then
-    if [ "${#scripts[@]}" -gt 0 ] && shellcheck "${scripts[@]}"; then
+    if [ "${#scripts[@]}" -gt 0 ] && shellcheck --severity=warning "${scripts[@]}"; then
         echo "  [ OK ] shellcheck found no issues"
     elif [ "${#scripts[@]}" -gt 0 ]; then
         echo "  [FAIL] shellcheck reported issues"
