@@ -100,11 +100,11 @@ If a job fails, the jobs after it are skipped.
 To show the pipeline catches problems, a branch was created with a deliberate
 syntax error, pushed so that CI failed, and then fixed.
 
-- Branch: `YOUR-BRANCH-NAME`
-- Change that broke CI: `YOUR-DESCRIPTION` (for example, a missing `fi` in `app/app.sh`)
-- Failing run: `YOUR-LINK-TO-THE-FAILED-RUN` (the `validate` job failed, so `test` and `docker` were skipped)
-- Fix commit: `YOUR-COMMIT-MESSAGE`
-- Passing run: `YOUR-LINK-TO-THE-PASSING-RUN` (all three jobs green)
+- Branch: `ci-failure-demo`
+- Change that broke CI: an unfinished `if` statement added to `app/app.sh` (a syntax error caught by `bash -n` in the lint step)
+- Failing run: https://github.com/thatonejoee/ts-academy-assignment-3/actions/runs/38149430488 (the `validate` job failed, so `test` and `docker` were skipped)
+- Fix commit: `Revert "Introduce syntax error to demonstrate CI failure"`
+- Passing run: https://github.com/thatonejoee/ts-academy-assignment-3/actions/runs/38149673533 (all three jobs green)
 
 The final workflow on `main` passes.
 
