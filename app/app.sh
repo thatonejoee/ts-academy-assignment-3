@@ -211,3 +211,4 @@ case "$command" in
         ;;
 esac
 exit $?
+if true; then
